@@ -1,0 +1,123 @@
+@*
+    Add/Edit Task view. Expects:
+    - Model: task object with TaskName, DueDate, Quadrant, CategoryId, Completed (and TaskId for edit).
+    - ViewBag.Categories: list of SelectListItem for Category dropdown (Home, School, Work, Church).
+    - ViewBag.Title: "Add Task" or "Edit Task".
+*@
+@model dynamic
+@{
+    ViewData["Title"] = ViewBag.Title ?? "Task";
+    var isEdit = Model?.TaskId != null && Model.TaskId > 0;
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">@(ViewBag.Title ?? (isEdit ? "Edit Task" : "Add Task"))</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-lg-6">
+            <form asp-action="@(isEdit ? "Edit" : "Add")" asp-controller="Home" method="post" class="needs-validation" novalidate>
+                @if (isEdit)
+                {
+                    <input type="hidden" name="TaskId" value="@Model?.TaskId" />
+                }
+
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <label for="TaskName" class="form-label">Task <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="TaskName" name="TaskName" required
+                               value="@Model?.TaskName" placeholder="Enter task" />
+                        <div class="invalid-feedback">Task is required.</div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <label for="DueDate" class="form-label">Due Date</label>
+                        <input type="date" class="form-control" id="DueDate" name="DueDate"
+                               value="@(Model?.DueDate != null ? ((DateTime)Model.DueDate).ToString("yyyy-MM-dd") : "")" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <label for="Quadrant" class="form-label">Quadrant <span class="text-danger">*</span></label>
+                        <select class="form-select" id="Quadrant" name="Quadrant" required>
+                            @{
+                                var q = Model?.Quadrant?.ToString();
+                            }
+                            <option value="">-- Select Quadrant --</option>
+                            @if (q == "1") { <option value="1" selected>Quadrant I: Important / Urgent</option> } else { <option value="1">Quadrant I: Important / Urgent</option> }
+                            @if (q == "2") { <option value="2" selected>Quadrant II: Important / Not Urgent</option> } else { <option value="2">Quadrant II: Important / Not Urgent</option> }
+                            @if (q == "3") { <option value="3" selected>Quadrant III: Not Important / Urgent</option> } else { <option value="3">Quadrant III: Not Important / Urgent</option> }
+                            @if (q == "4") { <option value="4" selected>Quadrant IV: Not Important / Not Urgent</option> } else { <option value="4">Quadrant IV: Not Important / Not Urgent</option> }
+                        </select>
+                        <div class="invalid-feedback">Please select a quadrant.</div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <label for="CategoryId" class="form-label">Category</label>
+                        <select class="form-select" id="CategoryId" name="CategoryId">
+                            <option value="">-- Select Category --</option>
+                            @if (ViewBag.Categories != null)
+                            {
+                                foreach (var cat in ViewBag.Categories as IEnumerable<dynamic>)
+                                {
+                                    var val = cat.Value ?? cat.CategoryId;
+                                    var text = cat.Text ?? cat.CategoryName;
+                                    var isSelected = Model?.CategoryId != null && (Model.CategoryId == cat.CategoryId || Model.CategoryId.ToString() == cat.Value?.ToString());
+                                    @if (isSelected) { <option value="@val" selected>@text</option> } else { <option value="@val">@text</option> }
+                                }
+                            }
+                            else
+                            {
+                                <option value="1">Home</option>
+                                <option value="2">School</option>
+                                <option value="3">Work</option>
+                                <option value="4">Church</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="form-check">
+                            @if (Model?.Completed == true) { <input class="form-check-input" type="checkbox" id="Completed" name="Completed" value="true" checked /> } else { <input class="form-check-input" type="checkbox" id="Completed" name="Completed" value="true" /> }
+                            <label class="form-check-label" for="Completed">Completed</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary me-2">Save</button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            'use strict';
+            var form = document.querySelector('.needs-validation');
+            if (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            }
+        })();
+    </script>
+}
