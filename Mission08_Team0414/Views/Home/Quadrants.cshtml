@@ -11,7 +11,7 @@
                 </div>
                 <div class="card-body">
                     @{
-                        var q1 = Model.Where(x => x.Quadrant == 1);
+                        var q1 = Model.Where(x => x.Quadrant == 1 && !x.Completed);
                     }
                     @if (!q1.Any())
                     {
@@ -24,8 +24,12 @@
                             {
                                 <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-0">
                                     <span>@t.TaskName</span>
-                                    <span>
-                                        <a asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                                    <span class="d-flex gap-1">
+                                        <form asp-action="MarkComplete" asp-route-id="@t.TaskId" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-success">Complete</button>
+                                        </form>
+                                        <a asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary">Edit</a>
                                         <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-danger">Delete</a>
                                     </span>
                                 </li>
@@ -45,7 +49,7 @@
                 </div>
                 <div class="card-body">
                     @{
-                        var q2 = Model.Where(x => x.Quadrant == 2);
+                        var q2 = Model.Where(x => x.Quadrant == 2 && !x.Completed);
                     }
                     @if (!q2.Any())
                     {
@@ -58,8 +62,12 @@
                             {
                                 <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-0">
                                     <span>@t.TaskName</span>
-                                    <span>
-                                        <a asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                                    <span class="d-flex gap-1">
+                                        <form asp-action="MarkComplete" asp-route-id="@t.TaskId" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-success">Complete</button>
+                                        </form>
+                                        <a asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary">Edit</a>
                                         <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-danger">Delete</a>
                                     </span>
                                 </li>
@@ -81,7 +89,7 @@
                 </div>
                 <div class="card-body">
                     @{
-                        var q3 = Model.Where(x => x.Quadrant == 3);
+                        var q3 = Model.Where(x => x.Quadrant == 3 && !x.Completed);
                     }
                     @if (!q3.Any())
                     {
@@ -94,8 +102,12 @@
                             {
                                 <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-0">
                                     <span>@t.TaskName</span>
-                                    <span>
-                                        <a asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                                    <span class="d-flex gap-1">
+                                        <form asp-action="MarkComplete" asp-route-id="@t.TaskId" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-success">Complete</button>
+                                        </form>
+                                        <a asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary">Edit</a>
                                         <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-danger">Delete</a>
                                     </span>
                                 </li>
@@ -115,7 +127,7 @@
                 </div>
                 <div class="card-body">
                     @{
-                        var q4 = Model.Where(x => x.Quadrant == 4);
+                        var q4 = Model.Where(x => x.Quadrant == 4 && !x.Completed);
                     }
                     @if (!q4.Any())
                     {
@@ -128,8 +140,12 @@
                             {
                                 <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-0">
                                     <span>@t.TaskName</span>
-                                    <span>
-                                        <a asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                                    <span class="d-flex gap-1">
+                                        <form asp-action="MarkComplete" asp-route-id="@t.TaskId" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-success">Complete</button>
+                                        </form>
+                                        <a asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary">Edit</a>
                                         <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-danger">Delete</a>
                                     </span>
                                 </li>
