@@ -1,0 +1,160 @@
+@model IEnumerable<Mission08_Team0414.Models.Task>
+<div class="container my-4">
+    <h2 class="text-center mb-4">Task Quadrants</h2>
+
+    <div class="row g-4">
+        <!-- Quadrant I: Important / Urgent (Top‑Left) -->
+        <div class="col-md-6">
+            <div class="card h-100 border-danger">
+                <div class="card-header bg-danger text-white">
+                    <div class="fw-bold">Quadrant I</div>
+                    <div class="small">Important / Urgent</div>
+                </div>
+                <div class="card-body">
+                    @{
+                        var q1 = Model.Where(x => x.Quadrant == 1 && !x.Completed);
+                    }
+                    @if (!q1.Any())
+                    {
+                        <p class="text-muted small mb-0">No tasks in this quadrant.</p>
+                    }
+                    else
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var t in q1)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-0">
+                                    <span>@t.TaskName</span>
+                                    <span class="d-flex gap-1">
+                                        <form asp-action="MarkComplete" asp-route-id="@t.TaskId" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-success">Complete</button>
+                                        </form>
+                                        <a asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary">Edit</a>
+                                        <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Quadrant II: Important / Not Urgent (Top‑Right) -->
+        <div class="col-md-6">
+            <div class="card h-100 border-primary">
+                <div class="card-header bg-primary text-white">
+                    <div class="fw-bold">Quadrant II</div>
+                    <div class="small">Important / Not Urgent</div>
+                </div>
+                <div class="card-body">
+                    @{
+                        var q2 = Model.Where(x => x.Quadrant == 2 && !x.Completed);
+                    }
+                    @if (!q2.Any())
+                    {
+                        <p class="text-muted small mb-0">No tasks in this quadrant.</p>
+                    }
+                    else
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var t in q2)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-0">
+                                    <span>@t.TaskName</span>
+                                    <span class="d-flex gap-1">
+                                        <form asp-action="MarkComplete" asp-route-id="@t.TaskId" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-success">Complete</button>
+                                        </form>
+                                        <a asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary">Edit</a>
+                                        <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-1">
+        <!-- Quadrant III: Not Important / Urgent (Bottom‑Left) -->
+        <div class="col-md-6">
+            <div class="card h-100 border-warning">
+                <div class="card-header bg-warning">
+                    <div class="fw-bold">Quadrant III</div>
+                    <div class="small">Not Important / Urgent</div>
+                </div>
+                <div class="card-body">
+                    @{
+                        var q3 = Model.Where(x => x.Quadrant == 3 && !x.Completed);
+                    }
+                    @if (!q3.Any())
+                    {
+                        <p class="text-muted small mb-0">No tasks in this quadrant.</p>
+                    }
+                    else
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var t in q3)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-0">
+                                    <span>@t.TaskName</span>
+                                    <span class="d-flex gap-1">
+                                        <form asp-action="MarkComplete" asp-route-id="@t.TaskId" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-success">Complete</button>
+                                        </form>
+                                        <a asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary">Edit</a>
+                                        <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Quadrant IV: Not Important / Not Urgent (Bottom‑Right) -->
+        <div class="col-md-6">
+            <div class="card h-100 border-secondary">
+                <div class="card-header bg-light">
+                    <div class="fw-bold">Quadrant IV</div>
+                    <div class="small">Not Important / Not Urgent</div>
+                </div>
+                <div class="card-body">
+                    @{
+                        var q4 = Model.Where(x => x.Quadrant == 4 && !x.Completed);
+                    }
+                    @if (!q4.Any())
+                    {
+                        <p class="text-muted small mb-0">No tasks in this quadrant.</p>
+                    }
+                    else
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var t in q4)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-0">
+                                    <span>@t.TaskName</span>
+                                    <span class="d-flex gap-1">
+                                        <form asp-action="MarkComplete" asp-route-id="@t.TaskId" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-success">Complete</button>
+                                        </form>
+                                        <a asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary">Edit</a>
+                                        <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
